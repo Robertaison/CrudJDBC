@@ -1,7 +1,8 @@
 import javax.swing.*;
+import java.sql.SQLException;
 
 public class CrudPessoas {
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException {
 
         int opcao = 6;
 
@@ -18,18 +19,28 @@ public class CrudPessoas {
 
             switch (opcao){
                 case 1:
+                        ListDataBase lista = new ListDataBase();
+                        lista.function();
                     break;
                 case 2:
+                        InsertIntoDatabase inserir = new InsertIntoDatabase();
+                        inserir.function();
                     break;
                 case 3:
+                        SearchByID pesquisa = new SearchByID();
+                        pesquisa.funcion();
                     break;
                 case 4:
                     break;
                 case 5:
+                        UpdateAtID update = new UpdateAtID();
+                        update.function();
                     break;
                 case 0:
+                        JOptionPane.showMessageDialog(null,"Saindo...");
                     break;
                 default:
+                        JOptionPane.showMessageDialog(null,"Digite alguma opcao valida");
                     break;
             }
         }
