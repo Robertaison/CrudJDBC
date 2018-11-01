@@ -3,7 +3,7 @@ import java.sql.*;
 
 public class UpdateAtID {
     public  void function() throws SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/cadastro", "postgres", "12345")) {
+        try (Connection connection = DataBaseConnection.getConnection()) {
             connection.setAutoCommit(false);
 
             int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id que será alterado"));
@@ -15,12 +15,8 @@ public class UpdateAtID {
             System.out.println("Connected to PostgreSQL database!");
 
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1,nome);
-                statement.setString(2,perfil);
-                statement.setInt(3,id);
-                statement.executeUpdate();
+                update(id, nome, perfil, statement);
                 connection.commit();
-
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -33,6 +29,13 @@ public class UpdateAtID {
             System.out.println("Connection failure.");
             e.printStackTrace();
         }
+    }
+
+    private void update(int id, String nome, String perfil, PreparedStatement statement) throws SQLException {
+        statement.setString(1,nome);
+        statement.setString(2,perfil);
+        statement.setInt(3,id);
+        statement.executeUpdate();
     }
 
 }

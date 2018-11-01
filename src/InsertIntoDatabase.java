@@ -5,7 +5,7 @@ public class InsertIntoDatabase {
 
 
     public  void function() throws SQLException{
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/cadastro", "postgres", "12345")) {
+        try (Connection connection = DataBaseConnection.getConnection()) {
             connection.setAutoCommit(false);
             String nome = JOptionPane.showInputDialog("Digite o nome que deseja adicionar");
             String perfil = JOptionPane.showInputDialog("Fale sobre seu perfil");

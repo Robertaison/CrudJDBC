@@ -31,6 +31,8 @@ public class CrudPessoas {
                         pesquisa.funcion();
                     break;
                 case 4:
+                        DeleteByID delete = new DeleteByID();
+                        delete.function();
                     break;
                 case 5:
                         UpdateAtID update = new UpdateAtID();
