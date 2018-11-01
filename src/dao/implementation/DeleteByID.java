@@ -1,17 +1,17 @@
+package dao.implementation;
+
 import javax.swing.*;
 import java.sql.*;
 
 public class DeleteByID {
-    public void function()throws SQLException{
+    public void function(int id)throws SQLException{
         try(Connection connection = DataBaseConnection.getConnection()) {
             connection.setAutoCommit(false);
-            int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id da pessoa que deseja remover"));
             String sql = "DELETE FROM pessoas WHERE id = (?)";
             JOptionPane.showMessageDialog(null,"Connected to PostgreSQL database!");
 
             try(PreparedStatement statement = connection.prepareStatement(sql)){
                 delete(connection, id, statement);
-
             }catch (Exception e){
                 e.printStackTrace();
                 connection.rollback();

@@ -1,10 +1,16 @@
+package dao.implementation;
+
+import model.Pessoa;
+
 import javax.swing.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListDataBase {
 
     public void function() throws SQLException {
-        try(Connection connection = DataBaseConnection.getConnection()) {
+        try(Connection connection = DataBaseConnection.getConnection())  {
             connection.setAutoCommit(false);
 
             String sql = "SELECT * FROM pessoas;";
@@ -25,15 +31,24 @@ public class ListDataBase {
     }
 
     private void list(PreparedStatement statement) throws SQLException {
+        List<Pessoa> pessoas = new ArrayList<Pessoa>();
+        String lista = "";
         statement.execute();
         ResultSet resultSet = statement.getResultSet();
-        String lista = "";
+        Pessoa pessoa;
+
         while (resultSet.next()){
             int id = resultSet.getInt("id");
             String nome = resultSet.getString("nome");
             String perfil = resultSet.getString("perfil");
-            lista += id + "\n" + nome + "\n" + perfil + "\n\n";
+            pessoa = new Pessoa(nome, perfil, id);
+            pessoas.add(pessoa);
         }
+
+        for(Pessoa aux : pessoas){
+            lista += aux;
+        }
+
         JOptionPane.showMessageDialog(null,lista);
     }
 }

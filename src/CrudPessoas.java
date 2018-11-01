@@ -1,9 +1,12 @@
+import dao.PessoasDAO;
+import dao.implementation.*;
+
 import javax.swing.*;
 import java.sql.SQLException;
 
 public class CrudPessoas {
     public static void main(String[] args) throws SQLException {
-
+        PessoasDAO pessoasDAO = new PessoasDAO();
         int opcao = 6;
 
         while(opcao!=0){
@@ -19,24 +22,19 @@ public class CrudPessoas {
 
             switch (opcao){
                 case 1:
-                        ListDataBase lista = new ListDataBase();
-                        lista.function();
+                        pessoasDAO.list();
                     break;
                 case 2:
-                        InsertIntoDatabase inserir = new InsertIntoDatabase();
-                        inserir.function();
+                        pessoasDAO.save();
                     break;
                 case 3:
-                        SearchByID pesquisa = new SearchByID();
-                        pesquisa.funcion();
+                        pessoasDAO.searchID();
                     break;
                 case 4:
-                        DeleteByID delete = new DeleteByID();
-                        delete.function();
+                        pessoasDAO.delete();
                     break;
                 case 5:
-                        UpdateAtID update = new UpdateAtID();
-                        update.function();
+                        pessoasDAO.updateID();
                     break;
                 case 0:
                         JOptionPane.showMessageDialog(null,"Saindo...");

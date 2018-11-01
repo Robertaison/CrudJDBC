@@ -1,20 +1,21 @@
+package dao.implementation;
+
+import model.Pessoa;
+
 import javax.swing.*;
 import java.sql.*;
 
 public class InsertIntoDatabase {
 
 
-    public  void function() throws SQLException{
-        try (Connection connection = DataBaseConnection.getConnection()) {
+    public  void function(Pessoa pessoa) throws SQLException{
+        try(Connection connection = DataBaseConnection.getConnection())  {
             connection.setAutoCommit(false);
-            String nome = JOptionPane.showInputDialog("Digite o nome que deseja adicionar");
-            String perfil = JOptionPane.showInputDialog("Fale sobre seu perfil");
-
             String sql = "INSERT INTO pessoas ( nome, perfil) values (?,?)";
             JOptionPane.showMessageDialog(null,"Connected to PostgreSQL database!");
 
-            try(Statement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);){
-                adiciona(nome, perfil, statement);
+            try(PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);){
+                adiciona(pessoa.getNome(), pessoa.getPerfil(), statement);
                 connection.commit();
 
             }catch (Exception e){
@@ -29,10 +30,10 @@ public class InsertIntoDatabase {
         }
     }
 
-    private static void adiciona(String nome, String perfil,  Statement statement) throws SQLException {
-        ((PreparedStatement) statement).setString(1,nome);
-        ((PreparedStatement) statement).setString(2,perfil);
-        boolean resultado = ((PreparedStatement) statement).execute();
+    private static void adiciona(String nome, String perfil,  PreparedStatement statement) throws SQLException {
+        statement.setString(1,nome);
+        statement.setString(2,perfil);
+        boolean resultado = statement.execute();
         if(resultado){
             JOptionPane.showMessageDialog(null,"Erro.");
         }else{

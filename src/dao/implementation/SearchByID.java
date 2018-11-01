@@ -1,12 +1,15 @@
+package dao.implementation;
+
+import model.Pessoa;
+
 import javax.swing.*;
 import java.sql.*;
 
 public class SearchByID {
-    public void funcion() throws SQLException{
+    public void funcion(int id) throws SQLException{
         try(Connection connection = DataBaseConnection.getConnection()) {
             connection.setAutoCommit(false);
 
-            int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id da pessoa que deseja consultar"));
             String sql = "SELECT * FROM pessoas WHERE id = (?)";
             System.out.println("Connected to PostgreSQL database!");
 
@@ -33,6 +36,7 @@ public class SearchByID {
         resultSet.next();
         String nome = resultSet.getString("nome");
         String perfil = resultSet.getString("perfil");
-        JOptionPane.showMessageDialog(null,id + "\n" + nome + "\n" + perfil);
+        Pessoa pessoa = new Pessoa(nome,perfil,id);
+        JOptionPane.showMessageDialog(null,pessoa);
     }
 }

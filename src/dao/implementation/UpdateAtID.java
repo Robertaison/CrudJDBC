@@ -1,21 +1,20 @@
+package dao.implementation;
+
+import model.Pessoa;
+
 import javax.swing.*;
 import java.sql.*;
 
 public class UpdateAtID {
-    public  void function() throws SQLException {
-        try (Connection connection = DataBaseConnection.getConnection()) {
+    public  void function(int id, Pessoa pessoa) throws SQLException {
+        try(Connection connection = DataBaseConnection.getConnection()) {
             connection.setAutoCommit(false);
-
-            int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id que será alterado"));
-            String nome = JOptionPane.showInputDialog("Digite o nome que deseja adicionar");
-            String perfil = JOptionPane.showInputDialog("Fale sobre seu perfil");
-
 
             String sql = "UPDATE pessoas SET nome = ?, perfil = ? WHERE id = ?";
             System.out.println("Connected to PostgreSQL database!");
 
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                update(id, nome, perfil, statement);
+                update(id, pessoa.getNome(), pessoa.getPerfil(), statement);
                 connection.commit();
 
             } catch (Exception e) {
